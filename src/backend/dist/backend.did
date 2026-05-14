@@ -1,0 +1,171 @@
+type WithdrawalStatus = 
+ variant {
+   APPROVED;
+   PENDING;
+   REJECTED;
+ };
+type WithdrawalPublic = 
+ record {
+   adminNote: opt text;
+   amount: nat;
+   destinationAddress: text;
+   id: WithdrawalId;
+   processedAt: opt Timestamp;
+   requestedAt: Timestamp;
+   status: WithdrawalStatus;
+   userId: UserId;
+ };
+type WithdrawalId = nat;
+type WalletId = nat;
+type UserPublic = 
+ record {
+   email: text;
+   id: UserId;
+   referralCode: ReferralCode;
+   referredBy: opt UserId;
+   registeredAt: Timestamp;
+   username: text;
+ };
+type UserId = principal;
+type UpsertWalletArgs = 
+ record {
+   cryptoName: text;
+   iconUrl: text;
+   isActive: bool;
+   network: text;
+   symbol: text;
+   walletAddress: text;
+ };
+type Timestamp = int;
+type SubmitDepositArgs = 
+ record {
+   amount: nat;
+   packageTier: PackageTier;
+   walletId: WalletId;
+ };
+type RequestWithdrawalArgs = 
+ record {
+   amount: nat;
+   destinationAddress: text;
+ };
+type RegisterArgs = 
+ record {
+   email: text;
+   referralCode: opt ReferralCode;
+   username: text;
+ };
+type ReferralCode = text;
+type Rank = 
+ variant {
+   APEX;
+   ARBITRAGEUR;
+   CATALYST;
+   GAME_CHANGER;
+   INFLUENCER;
+   LUMINARY;
+   NEXUS;
+   PIONEER;
+   STRATEGIST;
+   TITAN;
+   TRAILBLAZER;
+   VISIONARY;
+ };
+type PackageTier = 
+ variant {
+   GENESIS;
+   MOMENTUM;
+   VELOCITY;
+ };
+type InvestmentStatus = 
+ variant {
+   ACTIVE;
+   CANCELLED;
+   MATURED;
+ };
+type InvestmentPublic = 
+ record {
+   accumulatedBalance: nat;
+   amount: nat;
+   id: InvestmentId;
+   lastRoiAccrual: Timestamp;
+   maturityDate: Timestamp;
+   packageTier: PackageTier;
+   startDate: Timestamp;
+   status: InvestmentStatus;
+   userId: UserId;
+ };
+type InvestmentId = nat;
+type DepositStatus = 
+ variant {
+   CONFIRMED;
+   PENDING;
+   REJECTED;
+ };
+type DepositPublic = 
+ record {
+   adminNote: opt text;
+   amount: nat;
+   confirmedAt: opt Timestamp;
+   id: DepositId;
+   packageTier: PackageTier;
+   status: DepositStatus;
+   submittedAt: Timestamp;
+   userId: UserId;
+   walletAddress: text;
+   walletId: WalletId;
+ };
+type DepositId = nat;
+type CryptoWalletPublic = 
+ record {
+   cryptoName: text;
+   iconUrl: text;
+   id: WalletId;
+   isActive: bool;
+   network: text;
+   symbol: text;
+   walletAddress: text;
+ };
+type CreateInvestmentArgs = 
+ record {
+   amount: nat;
+   packageTier: PackageTier;
+ };
+service : {
+  accrueAllRoi: () -> ();
+  adminAddAdmin: (newAdmin: UserId) -> ();
+  adminAddWallet: (args: UpsertWalletArgs) -> (CryptoWalletPublic);
+  adminApproveWithdrawal: (id: WithdrawalId, note: opt text) -> ();
+  adminCancelInvestment: (id: InvestmentId) -> ();
+  adminConfirmDeposit: (id: DepositId, note: opt text) -> ();
+  adminCreateInvestment: (userId: UserId, args: CreateInvestmentArgs) ->
+   (InvestmentPublic);
+  adminDeleteWallet: (id: WalletId) -> ();
+  adminListAdmins: () -> (vec UserId) query;
+  adminListAllWallets: () -> (vec CryptoWalletPublic) query;
+  adminListDeposits: () -> (vec DepositPublic) query;
+  adminListInvestments: () -> (vec InvestmentPublic) query;
+  adminListUsers: () -> (vec UserPublic) query;
+  adminListWithdrawals: () -> (vec WithdrawalPublic) query;
+  adminRejectDeposit: (id: DepositId, note: opt text) -> ();
+  adminRejectWithdrawal: (id: WithdrawalId, note: opt text) -> ();
+  adminRemoveAdmin: (target: UserId) -> ();
+  adminUpdateWallet: (id: WalletId, args: UpsertWalletArgs) -> ();
+  getDashboard: () ->
+   (record {
+      accumulatedBalance: nat;
+      dailyRoiRate: nat;
+      rank: Rank;
+      referralCode: ReferralCode;
+      referralEarnings: nat;
+      totalInvested: nat;
+    }) query;
+  getMyDeposits: () -> (vec DepositPublic) query;
+  getMyInvestments: () -> (vec InvestmentPublic) query;
+  getMyProfile: () -> (opt UserPublic) query;
+  getMyWithdrawals: () -> (vec WithdrawalPublic) query;
+  isAdmin: () -> (bool) query;
+  listActiveWallets: () -> (vec CryptoWalletPublic) query;
+  register: (args: RegisterArgs) -> (bool);
+  requestWithdrawal: (args: RequestWithdrawalArgs) -> (WithdrawalPublic);
+  submitDeposit: (args: SubmitDepositArgs) -> (DepositPublic);
+}

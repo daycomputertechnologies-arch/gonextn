@@ -1,0 +1,26 @@
+{
+  "overview": "GoNext is a professional AI-powered investment platform offering institutional-grade arbitrage strategies. Users can join investment tiers, track daily ROI, earn referral commissions, and manage withdrawals — all through a sleek dark financial interface with gold accents.",
+  "features": [
+    "Three investment tiers: Genesis, Momentum, Velocity with daily ROI rates",
+    "Interactive ROI calculator on the packages page",
+    "User dashboard with balance, earnings, referral stats, and withdrawal history",
+    "Crypto deposit flow with admin-managed wallet addresses",
+    "Referral system with unique links and 10% commission tracking",
+    "Admin panel for user management, investment oversight, and withdrawal processing",
+    "Admin crypto wallet address manager — add, edit, delete crypto addresses",
+    "Rank system tracking user progress across 12 levels",
+    "Professional dark financial theme with navy and gold design"
+  ],
+  "category": "fintech",
+  "tags": [
+    "investment",
+    "crypto",
+    "arbitrage",
+    "dashboard",
+    "referral",
+    "admin",
+    "fintech",
+    "dark-theme"
+  ],
+  "last_updated": "2026-05-14T12:37:04.516Z"
+}

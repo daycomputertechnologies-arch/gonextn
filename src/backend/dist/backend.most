@@ -1,0 +1,137 @@
+// Version: 1.0.0
+type CryptoWallet__213512397 =
+  {
+    cryptoName : Text;
+    iconUrl : Text;
+    id : WalletId__289508304;
+    var isActive : Bool;
+    network : Text;
+    symbol : Text;
+    walletAddress : Text
+  };
+type Data__159895909<T> = {var count : Nat__490723111; elements : [var ?T]};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DepositId__127989691 = Nat;
+type DepositStatus__78226765 = {#CONFIRMED; #PENDING; #REJECTED};
+type Deposit__467415694 =
+  {
+    var adminNote : ?Text;
+    amount : Nat;
+    var confirmedAt : ?Timestamp__301639476;
+    id : DepositId__127989691;
+    packageTier : PackageTier__533998798;
+    var status : DepositStatus__78226765;
+    submittedAt : Timestamp__301639476;
+    userId : UserId__158757552;
+    walletAddress : Text;
+    walletId : WalletId__289508304
+  };
+type Internal__667636161<T> =
+  {children : [var ?Node__92254746<T>]; data : Data__159895909<T>};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type InvestmentId__319379909 = Nat;
+type InvestmentStatus__880383302 = {#ACTIVE; #CANCELLED; #MATURED};
+type Investment__5096695 =
+  {
+    var accumulatedBalance : Nat;
+    amount : Nat;
+    id : InvestmentId__319379909;
+    var lastRoiAccrual : Timestamp__301639476;
+    maturityDate : Timestamp__301639476;
+    packageTier : PackageTier__533998798;
+    startDate : Timestamp__301639476;
+    var status : InvestmentStatus__880383302;
+    userId : UserId__158757552
+  };
+type Leaf__520550824<T> = {data : Data__159895909<T>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__92254746<T> =
+  {#internal : Internal__667636161<T>; #leaf : Leaf__520550824<T>};
+type PackageTier__533998798 = {#GENESIS; #MOMENTUM; #VELOCITY};
+type ReferralCode__944724626 = Text;
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+type User__98118558 =
+  {
+    var email : Text;
+    id : UserId__158757552;
+    referralCode : ReferralCode__944724626;
+    referredBy : ?UserId__158757552;
+    registeredAt : Timestamp__301639476;
+    var username : Text
+  };
+type WalletId__289508304 = Nat;
+type WithdrawalId__526707137 = Nat;
+type WithdrawalStatus__598087654 = {#APPROVED; #PENDING; #REJECTED};
+type Withdrawal__747207979 =
+  {
+    var adminNote : ?Text;
+    amount : Nat;
+    destinationAddress : Text;
+    id : WithdrawalId__526707137;
+    var processedAt : ?Timestamp__301639476;
+    requestedAt : Timestamp__301639476;
+    var status : WithdrawalStatus__598087654;
+    userId : UserId__158757552
+  };
+actor {
+  stable admins :
+    {var root : Node__92254746<UserId__158757552>; var size : Nat__490723111};
+  stable deposits :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Deposit__467415694]];
+      var elementIndex : Nat__490723111
+    };
+  stable investments :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Investment__5096695]];
+      var elementIndex : Nat__490723111
+    };
+  stable referralCommissions :
+    {
+      var root : Node__46230540<UserId__158757552, Nat>;
+      var size : Nat__490723111
+    };
+  stable referralIndex :
+    {
+      var root : Node__46230540<ReferralCode__944724626, UserId__158757552>;
+      var size : Nat__490723111
+    };
+  stable referredBy :
+    {
+      var root : Node__46230540<UserId__158757552, UserId__158757552>;
+      var size : Nat__490723111
+    };
+  stable state :
+    {
+      var nextDepositId : Nat;
+      var nextInvestmentId : Nat;
+      var nextWalletId : Nat;
+      var nextWithdrawalId : Nat
+    };
+  stable users :
+    {
+      var root : Node__46230540<UserId__158757552, User__98118558>;
+      var size : Nat__490723111
+    };
+  stable wallets :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?CryptoWallet__213512397]];
+      var elementIndex : Nat__490723111
+    };
+  stable withdrawals :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Withdrawal__747207979]];
+      var elementIndex : Nat__490723111
+    }
+};
