@@ -1,5 +1,9 @@
-import { type RequestWithdrawalArgs, createActor } from "@/backend";
-import type { UpsertWalletArgs, WalletId } from "@/backend";
+import { createActor } from "@/backend";
+import type {
+  RequestWithdrawalArgs,
+  UpsertWalletArgs,
+  WalletId,
+} from "@/backend";
 import type {
   CryptoWallet,
   DashboardData,
@@ -9,6 +13,7 @@ import type {
   WithdrawalPublic,
 } from "@/types";
 import { useActor } from "@caffeineai/core-infrastructure";
+import { Principal } from "@dfinity/principal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useBackend() {
@@ -146,6 +151,22 @@ export function useRequestWithdrawal() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["myWithdrawals"] });
       queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+    },
+  });
+}
+
+export function useClaimAdmin() {
+  const { actor } = useActor(createActor);
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (principalText: string) => {
+      if (!actor) throw new Error("Not connected");
+      // Convert text principal to Principal type
+      const principal = Principal.fromText(principalText);
+      return actor.adminAddAdmin(principal);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["isAdmin"] });
     },
   });
 }

@@ -20,6 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAuth } from "@/hooks/useAuth";
 import {
   useDashboard,
   useMyInvestments,
@@ -36,6 +37,7 @@ import {
   Clock,
   Copy,
   DollarSign,
+  Fingerprint,
   TrendingUp,
   Users,
   XCircle,
@@ -45,9 +47,18 @@ import { toast } from "sonner";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 const PACKAGE_DAILY_RATE: Record<string, number> = {
-  GENESIS: 1.0,
-  MOMENTUM: 1.14,
-  VELOCITY: 1.28,
+  STARTER: 1.0,
+  BASIC: 1.02,
+  STANDARD: 1.04,
+  SELECT: 1.06,
+  ADVANCED: 1.08,
+  PLUS: 1.1,
+  PREMIUM: 1.12,
+  PREFERRED: 1.14,
+  EXECUTIVE: 1.16,
+  SIGNATURE: 1.18,
+  AMBASSADOR: 1.22,
+  ELITE: 1.28,
 };
 
 function formatUSD(cents: bigint): string {
@@ -450,6 +461,7 @@ function WithdrawalDialog({ maxAmount }: { maxAmount: bigint }) {
 // ── main page ─────────────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const { principal } = useAuth();
   const { data: user, isLoading: profileLoading } = useUserProfile();
   const { data: dashboard, isLoading: dashboardLoading } = useDashboard();
   const { data: investments = [], isLoading: invLoading } = useMyInvestments();
@@ -464,6 +476,13 @@ export default function DashboardPage() {
   function copyReferral() {
     navigator.clipboard.writeText(referralLink);
     toast.success("Referral link copied!");
+  }
+
+  function copyPrincipal() {
+    if (principal) {
+      navigator.clipboard.writeText(principal);
+      toast.success("User ID copied to clipboard!");
+    }
   }
 
   const rankProgressPercent = dashboard
@@ -552,6 +571,50 @@ export default function DashboardPage() {
             </>
           )}
         </div>
+
+        {/* ── User Identity Card ── */}
+        <Card
+          className="border-border bg-card animate-fade-up"
+          style={{ animationDelay: "350ms", animationFillMode: "both" }}
+          data-ocid="dashboard.identity.section"
+        >
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-display text-foreground flex items-center gap-2">
+              <Fingerprint className="w-4 h-4 text-primary" />
+              Your User ID
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {isLoading || !principal ? (
+              <Skeleton className="h-10 w-full bg-secondary" />
+            ) : (
+              <>
+                <p className="text-xs text-muted-foreground mb-2">
+                  Your unique Internet Identity principal. Share this with the
+                  site owner to grant admin access.
+                </p>
+                <div className="flex gap-2 items-center">
+                  <div
+                    className="flex-1 bg-secondary rounded-lg px-3 py-2.5 font-mono text-xs text-foreground truncate min-w-0 border border-border"
+                    data-ocid="dashboard.identity.principal_display"
+                  >
+                    {principal}
+                  </div>
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={copyPrincipal}
+                    className="gold-gradient text-card font-semibold shrink-0"
+                    aria-label="Copy User ID"
+                    data-ocid="dashboard.identity.copy_button"
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                </div>
+              </>
+            )}
+          </CardContent>
+        </Card>
 
         {/* ── Rank Progress + Referral ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

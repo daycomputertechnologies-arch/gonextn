@@ -1,4 +1,6 @@
 import { createActor } from "@/backend";
+import { useAuth } from "@/hooks/useAuth";
+import { useClaimAdmin } from "@/hooks/useBackend";
 import { useActor } from "@caffeineai/core-infrastructure";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -10,6 +12,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import AdminDepositsTab from "./admin/AdminDepositsTab";
 import AdminOverviewTab from "./admin/AdminOverviewTab";
 import AdminUsersTab from "./admin/AdminUsersTab";
@@ -29,6 +32,8 @@ const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const { actor, isFetching } = useActor(createActor);
+  const { principal } = useAuth();
+  const { mutate: claimAdmin, isPending: isClaiming } = useClaimAdmin();
 
   const { data: isAdmin, isLoading } = useQuery<boolean>({
     queryKey: ["isAdmin"],
@@ -57,20 +62,61 @@ export default function AdminPage() {
     );
   }
 
+  function handleClaimAdmin() {
+    if (!principal) {
+      toast.error("No principal found. Please log in first.");
+      return;
+    }
+    claimAdmin(principal, {
+      onSuccess: () => {
+        toast.success("Admin access claimed! Reloading panel…");
+      },
+      onError: (err) => {
+        toast.error(
+          err instanceof Error
+            ? err.message
+            : "Failed to claim admin access. An admin may already be assigned.",
+        );
+      },
+    });
+  }
+
   if (!isAdmin) {
     return (
       <div
         className="min-h-screen bg-background flex items-center justify-center"
         data-ocid="admin.error_state"
       >
-        <div className="text-center space-y-4 max-w-sm">
+        <div className="text-center space-y-6 max-w-sm px-4">
           <div className="w-16 h-16 rounded-full bg-destructive/10 border border-destructive/30 mx-auto flex items-center justify-center">
             <Shield className="w-8 h-8 text-destructive" />
           </div>
-          <h2 className="text-xl font-bold text-foreground">Access Denied</h2>
-          <p className="text-muted-foreground text-sm">
-            You do not have administrator privileges to access this panel.
-          </p>
+          <div className="space-y-2">
+            <h2 className="text-xl font-bold text-foreground">Access Denied</h2>
+            <p className="text-muted-foreground text-sm">
+              You do not have administrator privileges to access this panel.
+            </p>
+          </div>
+          <div className="border border-primary/20 rounded-xl p-4 bg-primary/5 space-y-3">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              If you are the site owner, click below to claim admin access. This
+              only works if no admin has been assigned yet.
+            </p>
+            <button
+              type="button"
+              onClick={handleClaimAdmin}
+              disabled={isClaiming || !principal}
+              className="w-full py-2.5 px-4 rounded-lg gold-gradient text-card font-semibold text-sm transition-smooth disabled:opacity-60 disabled:cursor-not-allowed"
+              data-ocid="admin.claim_admin_button"
+            >
+              {isClaiming ? "Claiming Access…" : "Claim Admin Access"}
+            </button>
+            {principal && (
+              <p className="text-xs text-muted-foreground font-mono break-all">
+                Principal: {principal}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     );

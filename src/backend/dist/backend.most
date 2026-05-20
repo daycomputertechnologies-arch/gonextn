@@ -53,7 +53,21 @@ type Node__46230540<K, V> =
   {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
 type Node__92254746<T> =
   {#internal : Internal__667636161<T>; #leaf : Leaf__520550824<T>};
-type PackageTier__533998798 = {#GENESIS; #MOMENTUM; #VELOCITY};
+type PackageTier__533998798 =
+  {
+    #ADVANCED;
+    #AMBASSADOR;
+    #BASIC;
+    #ELITE;
+    #EXECUTIVE;
+    #PLUS;
+    #PREFERRED;
+    #PREMIUM;
+    #SELECT;
+    #SIGNATURE;
+    #STANDARD;
+    #STARTER
+  };
 type ReferralCode__944724626 = Text;
 type Timestamp__301639476 = Int;
 type UserId__158757552 = Principal;

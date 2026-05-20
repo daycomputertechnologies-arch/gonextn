@@ -10,13 +10,14 @@ import Time "mo:core/Time";
 import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
 import Principal "mo:core/Principal";
+import InvTypes "../types/investments";
 
 mixin (
   withdrawals : List.List<WdTypes.Withdrawal>,
   users : Map.Map<Common.UserId, { id : Common.UserId; var username : Text; var email : Text; referralCode : Common.ReferralCode; referredBy : ?Common.UserId; registeredAt : Common.Timestamp }>,
   admins : Set.Set<Common.UserId>,
   referralCommissions : Map.Map<Common.UserId, Nat>,
-  investments : List.List<{ id : Common.InvestmentId; userId : Common.UserId; packageTier : { #GENESIS; #MOMENTUM; #VELOCITY }; amount : Nat; startDate : Common.Timestamp; maturityDate : Common.Timestamp; var status : { #ACTIVE; #MATURED; #CANCELLED }; var accumulatedBalance : Nat; var lastRoiAccrual : Common.Timestamp }>,
+  investments : List.List<InvTypes.Investment>,
   state : { var nextWithdrawalId : Nat }
 ) {
   /// Request a withdrawal. Only allowed Mon–Fri.

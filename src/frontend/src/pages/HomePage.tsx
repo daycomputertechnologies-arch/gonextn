@@ -78,7 +78,7 @@ const STATS = [
   { label: "Uptime", value: 99, suffix: ".8%", prefix: "", icon: Activity },
   {
     label: "Investment Tiers",
-    value: 3,
+    value: 12,
     suffix: "",
     prefix: "",
     icon: TrendingUp,
@@ -96,7 +96,7 @@ const HOW_IT_WORKS = [
   {
     step: "02",
     title: "Choose Package",
-    desc: "Select from Genesis, Momentum, or Velocity tiers based on your investment goals.",
+    desc: "Select from 12 tiers — Starter through Elite — designed to match every investment level and goal.",
     icon: Star,
   },
   {
@@ -116,12 +116,12 @@ const HOW_IT_WORKS = [
 // ─── Investment Packages ───────────────────────────────────────────────────────
 const PACKAGES = [
   {
-    name: "Genesis",
-    tagline: "Start your journey",
-    roi: "1.5%",
+    name: "Starter",
+    tagline: "Begin your journey",
+    roi: "1.00%",
     period: "daily ROI",
-    min: "$500",
-    max: "$4,999",
+    min: "$50",
+    max: "$499",
     features: [
       "Daily compounding",
       "Basic analytics",
@@ -131,15 +131,75 @@ const PACKAGES = [
     highlight: false,
   },
   {
-    name: "Momentum",
-    tagline: "Accelerate your gains",
-    roi: "2.2%",
+    name: "Basic",
+    tagline: "Build the foundation",
+    roi: "1.02%",
     period: "daily ROI",
-    min: "$5,000",
-    max: "$24,999",
+    min: "$500",
+    max: "$999",
+    features: [
+      "Daily compounding",
+      "Basic analytics",
+      "Email support",
+      "Referral bonuses",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Standard",
+    tagline: "Steady growth ahead",
+    roi: "1.04%",
+    period: "daily ROI",
+    min: "$1,000",
+    max: "$2,499",
     features: [
       "Daily compounding",
       "Advanced analytics",
+      "Priority support",
+      "Referral bonuses",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Select",
+    tagline: "Enhanced returns",
+    roi: "1.06%",
+    period: "daily ROI",
+    min: "$2,500",
+    max: "$4,999",
+    features: [
+      "Daily compounding",
+      "Advanced analytics",
+      "Priority support",
+      "Binary bonus",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Advanced",
+    tagline: "Accelerate your gains",
+    roi: "1.08%",
+    period: "daily ROI",
+    min: "$5,000",
+    max: "$9,999",
+    features: [
+      "Daily compounding",
+      "Advanced analytics",
+      "Priority support",
+      "Binary bonus",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Plus",
+    tagline: "Serious investor tier",
+    roi: "1.10%",
+    period: "daily ROI",
+    min: "$10,000",
+    max: "$19,999",
+    features: [
+      "Daily compounding",
+      "Institutional analytics",
       "Priority support",
       "Binary bonus",
       "Referral bonuses",
@@ -147,19 +207,97 @@ const PACKAGES = [
     highlight: true,
   },
   {
-    name: "Velocity",
-    tagline: "Maximum acceleration",
-    roi: "3.0%",
+    name: "Premium",
+    tagline: "Premium performance",
+    roi: "1.12%",
     period: "daily ROI",
-    min: "$25,000",
-    max: "$250,000",
+    min: "$20,000",
+    max: "$29,999",
+    features: [
+      "Daily compounding",
+      "Institutional analytics",
+      "Dedicated support",
+      "Binary bonus",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Preferred",
+    tagline: "Elite network access",
+    roi: "1.14%",
+    period: "daily ROI",
+    min: "$30,000",
+    max: "$39,999",
     features: [
       "Daily compounding",
       "Institutional analytics",
       "Dedicated manager",
       "Binary bonus",
-      "Referral bonuses",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Executive",
+    tagline: "High-performance tier",
+    roi: "1.16%",
+    period: "daily ROI",
+    min: "$40,000",
+    max: "$49,999",
+    features: [
+      "Daily compounding",
+      "Institutional analytics",
+      "Dedicated manager",
+      "Binary bonus",
+      "Monthly briefings",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Signature",
+    tagline: "Signature wealth growth",
+    roi: "1.18%",
+    period: "daily ROI",
+    min: "$50,000",
+    max: "$74,999",
+    features: [
+      "Daily compounding",
+      "Institutional analytics",
+      "VIP manager",
+      "Binary bonus",
       "VIP events",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Ambassador",
+    tagline: "Ambassador-level privileges",
+    roi: "1.22%",
+    period: "daily ROI",
+    min: "$75,000",
+    max: "$99,999",
+    features: [
+      "Daily compounding",
+      "Institutional analytics",
+      "VIP manager",
+      "Binary bonus",
+      "Exclusive insights",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Elite",
+    tagline: "Maximum wealth acceleration",
+    roi: "1.28%",
+    period: "daily ROI",
+    min: "$100,000",
+    max: "No Limit",
+    features: [
+      "Daily compounding",
+      "Institutional analytics",
+      "Dedicated VIP manager",
+      "Binary bonus",
+      "VIP events",
+      "Exclusive insights",
     ],
     highlight: false,
   },
@@ -432,12 +570,15 @@ export default function HomePage() {
               Choose Your <span className="gold-text">Package</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Three tiers designed for every investor profile — from first-time
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                12 tiers designed for every investor profile — from first-time
+                crypto investors to institutional-level professionals.
+              </p>
               crypto investors to seasoned professionals.
             </p>
           </FadeSection>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {PACKAGES.map((pkg, i) => (
               <FadeSection key={pkg.name} delay={i * 0.12}>
                 <div
@@ -721,7 +862,7 @@ export default function HomePage() {
             <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
               Join 10,000+ investors already building wealth with GoNext's
               institutional-grade arbitrage platform. Start today — minimum
-              deposit $500.
+              deposit $50.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/packages">

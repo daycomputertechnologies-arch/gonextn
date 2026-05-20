@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
   BarChart2,
   CheckCircle,
@@ -33,63 +33,253 @@ import { FaNetworkWired, FaUsers } from "react-icons/fa";
 // ─── Package data ───────────────────────────────────────────────────────────
 const PACKAGES = [
   {
-    id: "genesis",
-    name: "Genesis",
+    id: "starter",
+    name: "Starter",
     icon: TrendingUp,
-    range: "$50 – $4,999",
+    range: "$50 – $499",
     minUsd: 50,
+    maxUsd: 499,
     dailyRoi: 1.0,
     weeklyRoi: 7.0,
-    term: "1 Year",
+    term: "365 Days",
     popular: false,
     premium: false,
     badge: null as string | null,
     features: [
       "Daily ROI credited to wallet",
-      "Weekly compounding available",
       "Referral bonus eligible",
       "24/7 dashboard access",
       "Binary network participation",
     ],
   },
   {
-    id: "momentum",
-    name: "Momentum",
+    id: "basic",
+    name: "Basic",
+    icon: TrendingUp,
+    range: "$500 – $999",
+    minUsd: 500,
+    maxUsd: 999,
+    dailyRoi: 1.05,
+    weeklyRoi: 7.35,
+    term: "365 Days",
+    popular: false,
+    premium: false,
+    badge: null as string | null,
+    features: [
+      "Daily ROI credited to wallet",
+      "Referral bonus eligible",
+      "24/7 dashboard access",
+      "Binary network participation",
+    ],
+  },
+  {
+    id: "standard",
+    name: "Standard",
     icon: Zap,
-    range: "$5,000 – $24,999",
+    range: "$1,000 – $2,499",
+    minUsd: 1000,
+    maxUsd: 2499,
+    dailyRoi: 1.1,
+    weeklyRoi: 7.7,
+    term: "365 Days",
+    popular: false,
+    premium: false,
+    badge: null as string | null,
+    features: [
+      "Daily ROI credited to wallet",
+      "Advanced analytics",
+      "Priority support",
+      "Referral bonus eligible",
+      "Binary network participation",
+    ],
+  },
+  {
+    id: "select",
+    name: "Select",
+    icon: Zap,
+    range: "$2,500 – $4,999",
+    minUsd: 2500,
+    maxUsd: 4999,
+    dailyRoi: 1.12,
+    weeklyRoi: 7.84,
+    term: "365 Days",
+    popular: false,
+    premium: false,
+    badge: null as string | null,
+    features: [
+      "Daily ROI credited to wallet",
+      "Advanced analytics",
+      "Priority support",
+      "Binary bonus",
+      "Referral bonus eligible",
+    ],
+  },
+  {
+    id: "advanced",
+    name: "Advanced",
+    icon: Star,
+    range: "$5,000 – $9,999",
     minUsd: 5000,
-    dailyRoi: 1.14,
-    weeklyRoi: 8.0,
-    term: "1 Year",
+    maxUsd: 9999,
+    dailyRoi: 1.15,
+    weeklyRoi: 8.05,
+    term: "365 Days",
+    popular: false,
+    premium: false,
+    badge: null as string | null,
+    features: [
+      "Daily ROI credited to wallet",
+      "Advanced analytics",
+      "Priority support",
+      "Binary bonus",
+      "Referral bonus eligible",
+    ],
+  },
+  {
+    id: "plus",
+    name: "Plus",
+    icon: Star,
+    range: "$10,000 – $24,999",
+    minUsd: 10000,
+    maxUsd: 24999,
+    dailyRoi: 1.18,
+    weeklyRoi: 8.26,
+    term: "365 Days",
     popular: true,
     premium: false,
     badge: "Most Popular" as string | null,
     features: [
-      "All Genesis features",
-      "Enhanced 1.14% daily ROI",
-      "Priority support channel",
-      "Monthly performance report",
-      "Rank progression fast-track",
+      "Daily ROI credited to wallet",
+      "Institutional analytics",
+      "Priority support",
+      "Binary bonus",
+      "Referral bonus eligible",
     ],
   },
   {
-    id: "velocity",
-    name: "Velocity",
-    icon: Crown,
-    range: "$25,000+",
+    id: "premium",
+    name: "Premium",
+    icon: Trophy,
+    range: "$25,000 – $49,999",
     minUsd: 25000,
-    dailyRoi: 1.28,
-    weeklyRoi: 9.0,
-    term: "1 Year",
+    maxUsd: 49999,
+    dailyRoi: 1.2,
+    weeklyRoi: 8.4,
+    term: "365 Days",
+    popular: false,
+    premium: false,
+    badge: null as string | null,
+    features: [
+      "All Plus features",
+      "Dedicated support",
+      "Binary bonus",
+      "Rank fast-track",
+      "Enhanced daily returns",
+    ],
+  },
+  {
+    id: "preferred",
+    name: "Preferred",
+    icon: Trophy,
+    range: "$50,000 – $99,999",
+    minUsd: 50000,
+    maxUsd: 99999,
+    dailyRoi: 1.22,
+    weeklyRoi: 8.54,
+    term: "365 Days",
+    popular: false,
+    premium: false,
+    badge: null as string | null,
+    features: [
+      "All Premium features",
+      "Dedicated account manager",
+      "Binary bonus",
+      "Rank fast-track",
+      "VIP-tier analytics",
+    ],
+  },
+  {
+    id: "executive",
+    name: "Executive",
+    icon: Crown,
+    range: "$100,000 – $149,999",
+    minUsd: 100000,
+    maxUsd: 149999,
+    dailyRoi: 1.25,
+    weeklyRoi: 8.75,
+    term: "365 Days",
+    popular: false,
+    premium: false,
+    badge: null as string | null,
+    features: [
+      "All Preferred features",
+      "Dedicated account manager",
+      "Binary bonus",
+      "Monthly briefings",
+      "Institutional-grade returns",
+    ],
+  },
+  {
+    id: "signature",
+    name: "Signature",
+    icon: Crown,
+    range: "$150,000 – $199,999",
+    minUsd: 150000,
+    maxUsd: 199999,
+    dailyRoi: 1.27,
+    weeklyRoi: 8.89,
+    term: "365 Days",
     popular: false,
     premium: true,
-    badge: "Premium" as string | null,
+    badge: "VIP" as string | null,
     features: [
-      "All Momentum features",
-      "Maximum 1.28% daily ROI",
-      "Dedicated account manager",
-      "VIP rank advancement",
+      "All Executive features",
+      "VIP account manager",
+      "Binary bonus",
+      "VIP events access",
+      "Exclusive market insights",
+    ],
+  },
+  {
+    id: "ambassador",
+    name: "Ambassador",
+    icon: Crown,
+    range: "$200,000 – $249,999",
+    minUsd: 200000,
+    maxUsd: 249999,
+    dailyRoi: 1.28,
+    weeklyRoi: 8.96,
+    term: "365 Days",
+    popular: false,
+    premium: true,
+    badge: "Ambassador" as string | null,
+    features: [
+      "All Signature features",
+      "VIP account manager",
+      "Binary bonus",
       "Exclusive trading insights",
+      "Premier global network access",
+    ],
+  },
+  {
+    id: "elite",
+    name: "Elite",
+    icon: Crown,
+    range: "$250,000+",
+    minUsd: 250000,
+    maxUsd: null as number | null,
+    dailyRoi: 1.3,
+    weeklyRoi: 9.1,
+    term: "365 Days",
+    popular: false,
+    premium: true,
+    badge: "Elite" as string | null,
+    features: [
+      "All Ambassador features",
+      "Maximum 1.3% daily ROI",
+      "Dedicated VIP manager",
+      "Binary bonus",
+      "VIP events & exclusive insights",
     ],
   },
 ];
@@ -111,13 +301,25 @@ const RANKS = [
 ];
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type PackageId = "genesis" | "momentum" | "velocity";
+type PackageId =
+  | "starter"
+  | "basic"
+  | "standard"
+  | "select"
+  | "advanced"
+  | "plus"
+  | "premium"
+  | "preferred"
+  | "executive"
+  | "signature"
+  | "ambassador"
+  | "elite";
 
 type Package = (typeof PACKAGES)[number];
 
 function useROICalc() {
   const [amount, setAmount] = useState("5000");
-  const [packageId, setPackageId] = useState<PackageId>("momentum");
+  const [packageId, setPackageId] = useState<PackageId>("plus");
 
   const pkg = PACKAGES.find((p) => p.id === packageId) ?? PACKAGES[1];
   const principal = Number(amount) || 0;
@@ -212,12 +414,23 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 mb-5 bg-muted/40 rounded-lg px-3 py-2">
-          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-          <span className="text-sm text-muted-foreground">Term:</span>
-          <span className="text-sm font-semibold text-foreground">
-            {pkg.term}
-          </span>
+        <div className="grid grid-cols-3 gap-2 mb-5">
+          <div className="bg-muted/40 rounded-lg px-2 py-2 text-center">
+            <p className="text-xs text-muted-foreground mb-0.5">Min</p>
+            <p className="text-sm font-bold text-foreground">
+              ${pkg.minUsd.toLocaleString()}
+            </p>
+          </div>
+          <div className="bg-muted/40 rounded-lg px-2 py-2 text-center">
+            <p className="text-xs text-muted-foreground mb-0.5">Max</p>
+            <p className="text-sm font-bold text-foreground">
+              {pkg.maxUsd ? `${pkg.maxUsd.toLocaleString()}` : "Unlimited"}
+            </p>
+          </div>
+          <div className="bg-muted/40 rounded-lg px-2 py-2 text-center">
+            <p className="text-xs text-muted-foreground mb-0.5">Term</p>
+            <p className="text-sm font-bold text-foreground">365d</p>
+          </div>
         </div>
 
         <ul className="space-y-2.5 flex-1">
@@ -260,6 +473,7 @@ function ROIRow({ label, value }: { label: string; value: string }) {
 export default function PackagesPage() {
   const { amount, setAmount, packageId, setPackageId, pkg, result } =
     useROICalc();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background" data-ocid="packages.page">
@@ -299,11 +513,215 @@ export default function PackagesPage() {
         data-ocid="packages.tiers_section"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {PACKAGES.map((p, i) => (
               <PackageCard key={p.id} pkg={p} index={i} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Tier Comparison Chart */}
+      <section
+        className="py-16 bg-card border-y border-border/40"
+        data-ocid="packages.comparison_section"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-foreground mb-3">
+                Tier <span className="gold-text">Comparison</span>
+              </h2>
+              <p className="text-muted-foreground">
+                Compare all 12 investment tiers side-by-side to find the perfect
+                match for your goals.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-border/40">
+              <table className="w-full min-w-[900px]">
+                <thead className="sticky top-0 z-20">
+                  <tr className="bg-secondary/80 border-b border-border/40 backdrop-blur-sm">
+                    <th className="sticky left-0 z-30 bg-secondary/80 text-left px-5 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider whitespace-nowrap">
+                      Feature
+                    </th>
+                    {PACKAGES.map((p) => (
+                      <th
+                        key={p.id}
+                        className={[
+                          "text-center px-3 py-4 text-xs font-bold uppercase tracking-wider whitespace-nowrap",
+                          p.popular
+                            ? "gold-text"
+                            : p.premium
+                              ? "text-primary"
+                              : "text-foreground",
+                        ].join(" ")}
+                      >
+                        {p.name}
+                        {p.popular && (
+                          <span className="block text-[10px] normal-case tracking-normal font-normal text-muted-foreground mt-0.5">
+                            Most Popular
+                          </span>
+                        )}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Min Deposit */}
+                  <tr className="border-b border-border/20 hover:bg-secondary/20 transition-smooth">
+                    <td className="sticky left-0 z-10 bg-background px-5 py-3.5 text-sm font-semibold text-muted-foreground whitespace-nowrap">
+                      Min Deposit
+                    </td>
+                    {PACKAGES.map((p) => (
+                      <td
+                        key={p.id}
+                        className={[
+                          "text-center px-3 py-3.5 text-sm font-bold whitespace-nowrap",
+                          p.popular ? "gold-text" : "text-foreground",
+                        ].join(" ")}
+                      >
+                        ${p.minUsd.toLocaleString()}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Max Deposit */}
+                  <tr className="border-b border-border/20 bg-secondary/10 hover:bg-secondary/20 transition-smooth">
+                    <td className="sticky left-0 z-10 bg-secondary/10 px-5 py-3.5 text-sm font-semibold text-muted-foreground whitespace-nowrap">
+                      Max Deposit
+                    </td>
+                    {PACKAGES.map((p) => (
+                      <td
+                        key={p.id}
+                        className={[
+                          "text-center px-3 py-3.5 text-sm font-bold whitespace-nowrap",
+                          p.popular ? "gold-text" : "text-foreground",
+                        ].join(" ")}
+                      >
+                        {p.maxUsd
+                          ? `${p.maxUsd.toLocaleString()}`
+                          : "∞ Unlimited"}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Daily ROI */}
+                  <tr className="border-b border-border/20 hover:bg-secondary/20 transition-smooth">
+                    <td className="sticky left-0 z-10 bg-background px-5 py-3.5 text-sm font-semibold text-muted-foreground whitespace-nowrap">
+                      Daily ROI %
+                    </td>
+                    {PACKAGES.map((p) => (
+                      <td
+                        key={p.id}
+                        className="text-center px-3 py-3.5 whitespace-nowrap"
+                      >
+                        <span
+                          className={[
+                            "text-sm font-bold",
+                            p.popular ? "gold-text" : "text-primary",
+                          ].join(" ")}
+                        >
+                          {p.dailyRoi}%
+                        </span>
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Weekly ROI */}
+                  <tr className="border-b border-border/20 bg-secondary/10 hover:bg-secondary/20 transition-smooth">
+                    <td className="sticky left-0 z-10 bg-secondary/10 px-5 py-3.5 text-sm font-semibold text-muted-foreground whitespace-nowrap">
+                      Weekly ROI %
+                    </td>
+                    {PACKAGES.map((p) => (
+                      <td
+                        key={p.id}
+                        className="text-center px-3 py-3.5 whitespace-nowrap"
+                      >
+                        <span
+                          className={[
+                            "text-sm font-bold",
+                            p.popular ? "gold-text" : "text-primary",
+                          ].join(" ")}
+                        >
+                          {p.weeklyRoi}%
+                        </span>
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Duration */}
+                  <tr className="border-b border-border/20 hover:bg-secondary/20 transition-smooth">
+                    <td className="sticky left-0 z-10 bg-background px-5 py-3.5 text-sm font-semibold text-muted-foreground whitespace-nowrap">
+                      Duration
+                    </td>
+                    {PACKAGES.map((p) => (
+                      <td
+                        key={p.id}
+                        className="text-center px-3 py-3.5 text-sm text-foreground whitespace-nowrap"
+                      >
+                        {p.term}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Key Features */}
+                  <tr className="border-b border-border/20 bg-secondary/10 hover:bg-secondary/20 transition-smooth">
+                    <td className="sticky left-0 z-10 bg-secondary/10 px-5 py-3.5 text-sm font-semibold text-muted-foreground whitespace-nowrap">
+                      Key Benefits
+                    </td>
+                    {PACKAGES.map((p) => (
+                      <td
+                        key={p.id}
+                        className="text-center px-3 py-3.5 align-top"
+                      >
+                        <ul className="space-y-1 text-left">
+                          {p.features.slice(0, 2).map((f) => (
+                            <li
+                              key={f}
+                              className="flex items-start gap-1.5 text-xs text-muted-foreground"
+                            >
+                              <CheckCircle className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
+                              <span className="min-w-0 break-words">{f}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                    ))}
+                  </tr>
+                  {/* CTA Row */}
+                  <tr>
+                    <td className="sticky left-0 z-10 bg-background px-5 py-4 text-sm font-semibold text-muted-foreground whitespace-nowrap">
+                      &nbsp;
+                    </td>
+                    {PACKAGES.map((p, idx) => (
+                      <td key={p.id} className="text-center px-3 py-4">
+                        <Button
+                          size="sm"
+                          variant={p.popular ? "default" : "outline"}
+                          className={[
+                            "text-xs font-bold w-full whitespace-nowrap",
+                            p.popular
+                              ? "gold-gradient text-background hover:opacity-90"
+                              : "border-primary/50 text-primary hover:bg-primary/10",
+                          ].join(" ")}
+                          data-ocid={`packages.comparison_invest_button.${idx + 1}`}
+                          onClick={() =>
+                            navigate({
+                              to: "/invest",
+                              search: { package: p.name },
+                            })
+                          }
+                        >
+                          Start Investing
+                        </Button>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
         </div>
       </section>
 

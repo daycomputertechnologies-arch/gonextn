@@ -54,9 +54,18 @@ export interface InvestmentPublic {
 export type InvestmentStatus = { 'MATURED' : null } |
   { 'CANCELLED' : null } |
   { 'ACTIVE' : null };
-export type PackageTier = { 'GENESIS' : null } |
-  { 'VELOCITY' : null } |
-  { 'MOMENTUM' : null };
+export type PackageTier = { 'SIGNATURE' : null } |
+  { 'SELECT' : null } |
+  { 'BASIC' : null } |
+  { 'PLUS' : null } |
+  { 'STANDARD' : null } |
+  { 'PREFERRED' : null } |
+  { 'ADVANCED' : null } |
+  { 'EXECUTIVE' : null } |
+  { 'STARTER' : null } |
+  { 'PREMIUM' : null } |
+  { 'AMBASSADOR' : null } |
+  { 'ELITE' : null };
 export type Rank = { 'INFLUENCER' : null } |
   { 'ARBITRAGEUR' : null } |
   { 'NEXUS' : null } |
@@ -158,6 +167,7 @@ export interface _SERVICE {
   >,
   'getMyDeposits' : ActorMethod<[], Array<DepositPublic>>,
   'getMyInvestments' : ActorMethod<[], Array<InvestmentPublic>>,
+  'getMyPrincipal' : ActorMethod<[], string>,
   'getMyProfile' : ActorMethod<[], [] | [UserPublic]>,
   'getMyWithdrawals' : ActorMethod<[], Array<WithdrawalPublic>>,
   'isAdmin' : ActorMethod<[], boolean>,

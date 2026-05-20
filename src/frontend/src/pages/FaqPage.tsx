@@ -47,7 +47,7 @@ const FAQ_DATA: FaqCategory[] = [
         id: "returns",
         question: "How consistent are the returns?",
         answer:
-          "GoNext has maintained positive monthly returns every month since inception. Our blended portfolio strategy targets a daily ROI of 1.0%–1.28% depending on the chosen investment package (Genesis, Momentum, or Velocity). Historical back-tested data shows a Sharpe ratio above 3.2, indicating strong risk-adjusted performance. While no investment is completely without risk, arbitrage strategies are far less correlated with broader market crashes than directional trading, making returns more stable and predictable over time.",
+          "GoNext has maintained positive monthly returns every month since inception. Our blended portfolio strategy targets a daily ROI of 1.00%–1.28% depending on the chosen investment package (ranging from Starter to Elite across 12 tiers). Historical back-tested data shows a Sharpe ratio above 3.2, indicating strong risk-adjusted performance. While no investment is completely without risk, arbitrage strategies are far less correlated with broader market crashes than directional trading, making returns more stable and predictable over time.",
       },
       {
         id: "risks",
@@ -103,7 +103,7 @@ const FAQ_DATA: FaqCategory[] = [
         id: "roi-rates",
         question: "What are the exact ROI rates per package?",
         answer:
-          "GoNext offers three investment tiers: Genesis ($50–$4,999) — 1.0% daily ROI; Momentum ($5,000–$24,999) — 1.14% daily ROI; Velocity ($25,000+) — 1.28% daily ROI. All packages include daily profit crediting directly to your wallet balance with no lock-in period beyond the active investment term.",
+          "GoNext offers 12 investment tiers: Starter ($50–$499) — 1.00% daily ROI; Basic ($500–$999) — 1.02%; Standard ($1,000–$2,499) — 1.04%; Select ($2,500–$4,999) — 1.06%; Advanced ($5,000–$9,999) — 1.08%; Plus ($10,000–$19,999) — 1.10%; Premium ($20,000–$29,999) — 1.12%; Preferred ($30,000–$39,999) — 1.14%; Executive ($40,000–$49,999) — 1.16%; Signature ($50,000–$74,999) — 1.18%; Ambassador ($75,000–$99,999) — 1.22%; Elite ($100,000+) — 1.28% daily ROI. All packages include daily profit crediting directly to your wallet balance with no lock-in period beyond the active investment term.",
       },
       {
         id: "binary-bonus",

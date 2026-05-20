@@ -183,9 +183,18 @@ export enum InvestmentStatus {
     ACTIVE = "ACTIVE"
 }
 export enum PackageTier {
-    GENESIS = "GENESIS",
-    VELOCITY = "VELOCITY",
-    MOMENTUM = "MOMENTUM"
+    SIGNATURE = "SIGNATURE",
+    SELECT = "SELECT",
+    BASIC = "BASIC",
+    PLUS = "PLUS",
+    STANDARD = "STANDARD",
+    PREFERRED = "PREFERRED",
+    ADVANCED = "ADVANCED",
+    EXECUTIVE = "EXECUTIVE",
+    STARTER = "STARTER",
+    PREMIUM = "PREMIUM",
+    AMBASSADOR = "AMBASSADOR",
+    ELITE = "ELITE"
 }
 export enum Rank {
     INFLUENCER = "INFLUENCER",
@@ -235,6 +244,7 @@ export interface backendInterface {
     }>;
     getMyDeposits(): Promise<Array<DepositPublic>>;
     getMyInvestments(): Promise<Array<InvestmentPublic>>;
+    getMyPrincipal(): Promise<string>;
     getMyProfile(): Promise<UserPublic | null>;
     getMyWithdrawals(): Promise<Array<WithdrawalPublic>>;
     isAdmin(): Promise<boolean>;
@@ -547,6 +557,20 @@ export class Backend implements backendInterface {
             return from_candid_vec_n19(this._uploadFile, this._downloadFile, result);
         }
     }
+    async getMyPrincipal(): Promise<string> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getMyPrincipal();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getMyPrincipal();
+            return result;
+        }
+    }
     async getMyProfile(): Promise<UserPublic | null> {
         if (this.processError) {
             try {
@@ -833,13 +857,31 @@ function from_candid_record_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint
     };
 }
 function from_candid_variant_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    GENESIS: null;
+    SIGNATURE: null;
 } | {
-    VELOCITY: null;
+    SELECT: null;
 } | {
-    MOMENTUM: null;
+    BASIC: null;
+} | {
+    PLUS: null;
+} | {
+    STANDARD: null;
+} | {
+    PREFERRED: null;
+} | {
+    ADVANCED: null;
+} | {
+    EXECUTIVE: null;
+} | {
+    STARTER: null;
+} | {
+    PREMIUM: null;
+} | {
+    AMBASSADOR: null;
+} | {
+    ELITE: null;
 }): PackageTier {
-    return "GENESIS" in value ? PackageTier.GENESIS : "VELOCITY" in value ? PackageTier.VELOCITY : "MOMENTUM" in value ? PackageTier.MOMENTUM : value;
+    return "SIGNATURE" in value ? PackageTier.SIGNATURE : "SELECT" in value ? PackageTier.SELECT : "BASIC" in value ? PackageTier.BASIC : "PLUS" in value ? PackageTier.PLUS : "STANDARD" in value ? PackageTier.STANDARD : "PREFERRED" in value ? PackageTier.PREFERRED : "ADVANCED" in value ? PackageTier.ADVANCED : "EXECUTIVE" in value ? PackageTier.EXECUTIVE : "STARTER" in value ? PackageTier.STARTER : "PREMIUM" in value ? PackageTier.PREMIUM : "AMBASSADOR" in value ? PackageTier.AMBASSADOR : "ELITE" in value ? PackageTier.ELITE : value;
 }
 function from_candid_variant_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     REJECTED: null;
@@ -965,18 +1007,54 @@ function to_candid_record_n36(_uploadFile: (file: ExternalBlob) => Promise<Uint8
     };
 }
 function to_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: PackageTier): {
-    GENESIS: null;
+    SIGNATURE: null;
 } | {
-    VELOCITY: null;
+    SELECT: null;
 } | {
-    MOMENTUM: null;
+    BASIC: null;
+} | {
+    PLUS: null;
+} | {
+    STANDARD: null;
+} | {
+    PREFERRED: null;
+} | {
+    ADVANCED: null;
+} | {
+    EXECUTIVE: null;
+} | {
+    STARTER: null;
+} | {
+    PREMIUM: null;
+} | {
+    AMBASSADOR: null;
+} | {
+    ELITE: null;
 } {
-    return value == PackageTier.GENESIS ? {
-        GENESIS: null
-    } : value == PackageTier.VELOCITY ? {
-        VELOCITY: null
-    } : value == PackageTier.MOMENTUM ? {
-        MOMENTUM: null
+    return value == PackageTier.SIGNATURE ? {
+        SIGNATURE: null
+    } : value == PackageTier.SELECT ? {
+        SELECT: null
+    } : value == PackageTier.BASIC ? {
+        BASIC: null
+    } : value == PackageTier.PLUS ? {
+        PLUS: null
+    } : value == PackageTier.STANDARD ? {
+        STANDARD: null
+    } : value == PackageTier.PREFERRED ? {
+        PREFERRED: null
+    } : value == PackageTier.ADVANCED ? {
+        ADVANCED: null
+    } : value == PackageTier.EXECUTIVE ? {
+        EXECUTIVE: null
+    } : value == PackageTier.STARTER ? {
+        STARTER: null
+    } : value == PackageTier.PREMIUM ? {
+        PREMIUM: null
+    } : value == PackageTier.AMBASSADOR ? {
+        AMBASSADOR: null
+    } : value == PackageTier.ELITE ? {
+        ELITE: null
     } : value;
 }
 export interface CreateActorOptions {

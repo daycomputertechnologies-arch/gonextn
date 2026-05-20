@@ -101,9 +101,18 @@ export enum InvestmentStatus {
     ACTIVE = "ACTIVE"
 }
 export enum PackageTier {
-    GENESIS = "GENESIS",
-    VELOCITY = "VELOCITY",
-    MOMENTUM = "MOMENTUM"
+    SIGNATURE = "SIGNATURE",
+    SELECT = "SELECT",
+    BASIC = "BASIC",
+    PLUS = "PLUS",
+    STANDARD = "STANDARD",
+    PREFERRED = "PREFERRED",
+    ADVANCED = "ADVANCED",
+    EXECUTIVE = "EXECUTIVE",
+    STARTER = "STARTER",
+    PREMIUM = "PREMIUM",
+    AMBASSADOR = "AMBASSADOR",
+    ELITE = "ELITE"
 }
 export enum Rank {
     INFLUENCER = "INFLUENCER",
@@ -153,6 +162,7 @@ export interface backendInterface {
     }>;
     getMyDeposits(): Promise<Array<DepositPublic>>;
     getMyInvestments(): Promise<Array<InvestmentPublic>>;
+    getMyPrincipal(): Promise<string>;
     getMyProfile(): Promise<UserPublic | null>;
     getMyWithdrawals(): Promise<Array<WithdrawalPublic>>;
     isAdmin(): Promise<boolean>;

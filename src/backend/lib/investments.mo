@@ -10,36 +10,102 @@ module {
 
   public func getPackageConfig(tier : Types.PackageTier) : Types.PackageConfig {
     switch (tier) {
-      case (#GENESIS) {
-        {
-          tier = #GENESIS;
-          minAmount = 5_000;      // $50 in cents
-          maxAmount = ?499_900;   // $4,999 in cents
-          dailyRatePerMille = 10; // 1.0%
-          weeklyRatePerMille = 70;
-          durationDays = 365;
-        }
-      };
-      case (#MOMENTUM) {
-        {
-          tier = #MOMENTUM;
-          minAmount = 500_000;    // $5,000 in cents
-          maxAmount = ?2_499_900; // $24,999 in cents
-          dailyRatePerMille = 11; // 1.1% (approx 1.14%)
-          weeklyRatePerMille = 77;
-          durationDays = 365;
-        }
-      };
-      case (#VELOCITY) {
-        {
-          tier = #VELOCITY;
-          minAmount = 2_500_000;  // $25,000 in cents
-          maxAmount = null;
-          dailyRatePerMille = 13; // 1.3% (approx 1.28%)
-          weeklyRatePerMille = 91;
-          durationDays = 365;
-        }
-      };
+      case (#STARTER) {{
+        tier = #STARTER;
+        minAmount = 5_000;        // $50 in cents
+        maxAmount = ?99_900;      // $999 in cents
+        dailyRatePerMille = 10;   // 1.0%
+        weeklyRatePerMille = 70;
+        durationDays = 365;
+      }};
+      case (#BASIC) {{
+        tier = #BASIC;
+        minAmount = 100_000;      // $1,000 in cents
+        maxAmount = ?249_900;     // $2,499 in cents
+        dailyRatePerMille = 10;   // 1.0%
+        weeklyRatePerMille = 70;
+        durationDays = 365;
+      }};
+      case (#STANDARD) {{
+        tier = #STANDARD;
+        minAmount = 250_000;      // $2,500 in cents
+        maxAmount = ?499_900;     // $4,999 in cents
+        dailyRatePerMille = 11;   // 1.1%
+        weeklyRatePerMille = 77;
+        durationDays = 365;
+      }};
+      case (#SELECT) {{
+        tier = #SELECT;
+        minAmount = 500_000;      // $5,000 in cents
+        maxAmount = ?999_900;     // $9,999 in cents
+        dailyRatePerMille = 11;   // 1.1%
+        weeklyRatePerMille = 77;
+        durationDays = 365;
+      }};
+      case (#ADVANCED) {{
+        tier = #ADVANCED;
+        minAmount = 1_000_000;    // $10,000 in cents
+        maxAmount = ?1_999_900;   // $19,999 in cents
+        dailyRatePerMille = 11;   // 1.1%
+        weeklyRatePerMille = 77;
+        durationDays = 365;
+      }};
+      case (#PLUS) {{
+        tier = #PLUS;
+        minAmount = 2_000_000;    // $20,000 in cents
+        maxAmount = ?2_999_900;   // $29,999 in cents
+        dailyRatePerMille = 12;   // 1.2%
+        weeklyRatePerMille = 84;
+        durationDays = 365;
+      }};
+      case (#PREMIUM) {{
+        tier = #PREMIUM;
+        minAmount = 3_000_000;    // $30,000 in cents
+        maxAmount = ?4_999_900;   // $49,999 in cents
+        dailyRatePerMille = 12;   // 1.2%
+        weeklyRatePerMille = 84;
+        durationDays = 365;
+      }};
+      case (#PREFERRED) {{
+        tier = #PREFERRED;
+        minAmount = 5_000_000;    // $50,000 in cents
+        maxAmount = ?7_499_900;   // $74,999 in cents
+        dailyRatePerMille = 12;   // 1.2%
+        weeklyRatePerMille = 84;
+        durationDays = 365;
+      }};
+      case (#EXECUTIVE) {{
+        tier = #EXECUTIVE;
+        minAmount = 7_500_000;    // $75,000 in cents
+        maxAmount = ?9_999_900;   // $99,999 in cents
+        dailyRatePerMille = 13;   // 1.3%
+        weeklyRatePerMille = 91;
+        durationDays = 365;
+      }};
+      case (#SIGNATURE) {{
+        tier = #SIGNATURE;
+        minAmount = 10_000_000;   // $100,000 in cents
+        maxAmount = ?14_999_900;  // $149,999 in cents
+        dailyRatePerMille = 13;   // 1.3%
+        weeklyRatePerMille = 91;
+        durationDays = 365;
+      }};
+      case (#AMBASSADOR) {{
+        tier = #AMBASSADOR;
+        minAmount = 15_000_000;   // $150,000 in cents
+        maxAmount = ?24_999_900;  // $249,999 in cents
+        dailyRatePerMille = 13;   // 1.3%
+        weeklyRatePerMille = 91;
+        durationDays = 365;
+      }};
+      case (#ELITE) {{
+        tier = #ELITE;
+        minAmount = 25_000_000;   // $250,000 in cents
+        maxAmount = null;
+        dailyRatePerMille = 13;   // 1.3%
+        weeklyRatePerMille = 91;
+        durationDays = 365;
+      }};
     }
   };
 

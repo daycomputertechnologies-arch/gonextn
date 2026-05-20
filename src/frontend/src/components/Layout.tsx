@@ -233,17 +233,6 @@ export function Layout({
             <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} GoNext. All rights reserved.
             </p>
-            <p className="text-muted-foreground text-xs">
-              Built with love using{" "}
-              <a
-                href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                caffeine.ai
-              </a>
-            </p>
           </div>
         </div>
       </footer>

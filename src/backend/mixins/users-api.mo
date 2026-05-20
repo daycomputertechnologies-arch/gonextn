@@ -111,6 +111,11 @@ mixin (
     admins.remove(target);
   };
 
+  /// Returns the caller's own principal as text — used by the dashboard to display user ID.
+  public shared query ({ caller }) func getMyPrincipal() : async Text {
+    caller.toText()
+  };
+
   /// Query whether a principal is an admin.
   public shared query ({ caller }) func isAdmin() : async Bool {
     AdminLib.isAdmin(admins, caller)

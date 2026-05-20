@@ -72,9 +72,18 @@ type Rank =
  };
 type PackageTier = 
  variant {
-   GENESIS;
-   MOMENTUM;
-   VELOCITY;
+   ADVANCED;
+   AMBASSADOR;
+   BASIC;
+   ELITE;
+   EXECUTIVE;
+   PLUS;
+   PREFERRED;
+   PREMIUM;
+   SELECT;
+   SIGNATURE;
+   STANDARD;
+   STARTER;
  };
 type InvestmentStatus = 
  variant {
@@ -161,6 +170,7 @@ service : {
     }) query;
   getMyDeposits: () -> (vec DepositPublic) query;
   getMyInvestments: () -> (vec InvestmentPublic) query;
+  getMyPrincipal: () -> (text) query;
   getMyProfile: () -> (opt UserPublic) query;
   getMyWithdrawals: () -> (vec WithdrawalPublic) query;
   isAdmin: () -> (bool) query;

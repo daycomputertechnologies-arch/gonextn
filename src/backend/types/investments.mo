@@ -2,9 +2,18 @@ import Common "common";
 
 module {
   public type PackageTier = {
-    #GENESIS;
-    #MOMENTUM;
-    #VELOCITY;
+    #STARTER;
+    #BASIC;
+    #STANDARD;
+    #SELECT;
+    #ADVANCED;
+    #PLUS;
+    #PREMIUM;
+    #PREFERRED;
+    #EXECUTIVE;
+    #SIGNATURE;
+    #AMBASSADOR;
+    #ELITE;
   };
 
   public type InvestmentStatus = {

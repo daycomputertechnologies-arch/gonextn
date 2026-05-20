@@ -40,7 +40,7 @@ const mockWallet2 = {
 const mockInvestment = {
   id: BigInt(1),
   status: InvestmentStatus.ACTIVE,
-  packageTier: PackageTier.MOMENTUM,
+  packageTier: PackageTier.ADVANCED,
   maturityDate: BigInt(Date.now() + 90 * 24 * 60 * 60 * 1000),
   userId: mockUserId,
   lastRoiAccrual: BigInt(Date.now()),
@@ -52,7 +52,7 @@ const mockInvestment = {
 const mockDeposit = {
   id: BigInt(1),
   status: DepositStatus.CONFIRMED,
-  packageTier: PackageTier.MOMENTUM,
+  packageTier: PackageTier.ADVANCED,
   userId: mockUserId,
   confirmedAt: BigInt(Date.now() - 25 * 24 * 60 * 60 * 1000),
   submittedAt: BigInt(Date.now() - 30 * 24 * 60 * 60 * 1000),
@@ -106,4 +106,5 @@ export const mockBackend: backendInterface = {
   register: async () => true,
   requestWithdrawal: async () => mockWithdrawal,
   submitDeposit: async () => mockDeposit,
+  getMyPrincipal: async () => "aaaaa-aa",
 };

@@ -31,9 +31,18 @@ export const WithdrawalId = IDL.Nat;
 export const InvestmentId = IDL.Nat;
 export const DepositId = IDL.Nat;
 export const PackageTier = IDL.Variant({
-  'GENESIS' : IDL.Null,
-  'VELOCITY' : IDL.Null,
-  'MOMENTUM' : IDL.Null,
+  'SIGNATURE' : IDL.Null,
+  'SELECT' : IDL.Null,
+  'BASIC' : IDL.Null,
+  'PLUS' : IDL.Null,
+  'STANDARD' : IDL.Null,
+  'PREFERRED' : IDL.Null,
+  'ADVANCED' : IDL.Null,
+  'EXECUTIVE' : IDL.Null,
+  'STARTER' : IDL.Null,
+  'PREMIUM' : IDL.Null,
+  'AMBASSADOR' : IDL.Null,
+  'ELITE' : IDL.Null,
 });
 export const CreateInvestmentArgs = IDL.Record({
   'packageTier' : PackageTier,
@@ -173,6 +182,7 @@ export const idlService = IDL.Service({
     ),
   'getMyDeposits' : IDL.Func([], [IDL.Vec(DepositPublic)], ['query']),
   'getMyInvestments' : IDL.Func([], [IDL.Vec(InvestmentPublic)], ['query']),
+  'getMyPrincipal' : IDL.Func([], [IDL.Text], ['query']),
   'getMyProfile' : IDL.Func([], [IDL.Opt(UserPublic)], ['query']),
   'getMyWithdrawals' : IDL.Func([], [IDL.Vec(WithdrawalPublic)], ['query']),
   'isAdmin' : IDL.Func([], [IDL.Bool], ['query']),
@@ -212,9 +222,18 @@ export const idlFactory = ({ IDL }) => {
   const InvestmentId = IDL.Nat;
   const DepositId = IDL.Nat;
   const PackageTier = IDL.Variant({
-    'GENESIS' : IDL.Null,
-    'VELOCITY' : IDL.Null,
-    'MOMENTUM' : IDL.Null,
+    'SIGNATURE' : IDL.Null,
+    'SELECT' : IDL.Null,
+    'BASIC' : IDL.Null,
+    'PLUS' : IDL.Null,
+    'STANDARD' : IDL.Null,
+    'PREFERRED' : IDL.Null,
+    'ADVANCED' : IDL.Null,
+    'EXECUTIVE' : IDL.Null,
+    'STARTER' : IDL.Null,
+    'PREMIUM' : IDL.Null,
+    'AMBASSADOR' : IDL.Null,
+    'ELITE' : IDL.Null,
   });
   const CreateInvestmentArgs = IDL.Record({
     'packageTier' : PackageTier,
@@ -366,6 +385,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'getMyDeposits' : IDL.Func([], [IDL.Vec(DepositPublic)], ['query']),
     'getMyInvestments' : IDL.Func([], [IDL.Vec(InvestmentPublic)], ['query']),
+    'getMyPrincipal' : IDL.Func([], [IDL.Text], ['query']),
     'getMyProfile' : IDL.Func([], [IDL.Opt(UserPublic)], ['query']),
     'getMyWithdrawals' : IDL.Func([], [IDL.Vec(WithdrawalPublic)], ['query']),
     'isAdmin' : IDL.Func([], [IDL.Bool], ['query']),
